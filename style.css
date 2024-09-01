@@ -97,6 +97,7 @@ form button:disabled {
     bottom: 22.5rem;
     background-color: white;
     animation: spinAnimate 3s linear infinite normal;
+    opacity: 0.5;
 }
 
 @keyframes spinAnimate {
@@ -114,4 +115,4 @@ form button:disabled {
 
 .loaderHide {
     display: none;
-}
+}å
