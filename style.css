@@ -81,16 +81,21 @@ form button {
     cursor: pointer;
 }
 
+form button:disabled {
+    cursor: default;
+}
+
 .loader {
-    width: 1.75vh;
-    height: 1.75vh;
+    width: 8vh;
+    height: 8vh;
     border-radius: 50%;
-    border: 5px solid rgb(240, 233, 233);
-    border-top: 5px solid rgb(100, 98, 98);
+    border: 15px solid rgb(240, 233, 233);
+    border-top: 15px solid rgb(100, 98, 98);
     margin: 2rem 0 2rem 0;
-    position: relative;
-    left: 1rem;
-    bottom: 0.15rem;
+    position: absolute;
+    left: 49.3rem;
+    bottom: 22.5rem;
+    background-color: white;
     animation: spinAnimate 3s linear infinite normal;
 }
 
