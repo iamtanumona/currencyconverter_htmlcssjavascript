@@ -1,12 +1,14 @@
-const  BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
+const BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
 const dropdowns = document.querySelectorAll(".dropdown select");
 const btnEl = document.querySelector("form button");
 const fromCurr = document.querySelector(".from select");
 const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
 const loaderEl = document.querySelector(".loaderHide");
+let amountEl = document.querySelector(".amount input");
 
-/* Default coversion rate should be showing at first time welcome page load i.e USD tyo INR */
+
+/* Default conversion rate should be showing at a first-time welcome page load i.e USD to INR */
 window.addEventListener("load",() => {
     updateExchangeRate();
 });
@@ -26,7 +28,7 @@ for(let select of dropdowns) {
         }
         select.append(newOption);
     }
-    /* Whenever select is changing, that time we will call updateFlag function so that we can find the target that where the change is happened*/
+    /* Whenever select is changing, that time we will call updateFlag function so that we can find the target where the change happened*/
     select.addEventListener("change",(evt) => {
         updateFlag(evt.target);
     })
@@ -43,14 +45,13 @@ const updateFlag = (element) => {
 
 /* Exchange rate conversion calculation */
 const updateExchangeRate = async () => {
-    let amountEl = document.querySelector(".amount input");
     let amountVal = amountEl.value;
     /* Amount value cannot be less than 1 or null */
     if (amountVal === "" || amountVal < 1){
         amountVal = 1;
         amountEl.value = "1";
     }
-    /* Whenever we will send request to below URL then we will get our exchange rate */
+    /* Whenever we send a request to the below URL then we will get our exchange rate */
     const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}.json`;
     let response = await fetch(URL);
     /* Detching data from this response */
@@ -62,14 +63,21 @@ const updateExchangeRate = async () => {
     loaderEl.classList.add("loaderHide");
 }
 
-/* Call exchange rate conversion function */
+/* Call exchange rate conversion function after button click*/
 btnEl.addEventListener("click",(evt) => {
     /* To prevent default functionalities after form button submission */
     evt.preventDefault(); 
     loaderEl.classList.remove("loaderHide");
     loaderEl.classList.add("loader");
+    fromCurr.disabled = true;
+    toCurr.disabled = true;
+    btnEl.disabled = true;
+    amountEl.disabled = true;
     setTimeout(() => {
         updateExchangeRate();
+        fromCurr.disabled = false;
+        toCurr.disabled = false;
+        btnEl.disabled = false;
+        amountEl.disabled = false;
     },3000);
-    
 });
